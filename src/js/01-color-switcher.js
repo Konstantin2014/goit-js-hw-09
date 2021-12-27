@@ -1,5 +1,3 @@
-// ================== take refs  ==================
-
 const refs = {
   startButton: document.querySelector('button[data-start]'),
   stopButton: document.querySelector('button[data-stop]'),
@@ -7,35 +5,25 @@ const refs = {
   allButtons: document.querySelectorAll('button'),
 };
 
-// ================== basic style  ==================
-refs.stopButton.disabled = true;
-let timerId = null;
-
-refs.bodyStyle.style.display = 'flex';
-refs.bodyStyle.style.justifyContent = 'center';
-refs.bodyStyle.style.marginTop = '400px';
-refs.bodyStyle.style.cursor = 'pointer';
-
-refs.allButtons.forEach(btn => {
-  btn.style.cursor = 'pointer';
-  btn.style.display = 'inline block';
-  btn.style.justifyContent = 'center';
-  btn.style.alignItems = 'center';
-  btn.style.padding = '15px 30px';
-  btn.style.borderRadius = '10px';
-  btn.style.marginLeft = '30px';
-});
-// ================== get color  ==================
+refs.startButton.addEventListener('click', onStartButton);
+refs.stopButton.addEventListener('click', onStopButton);
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
-// ================== add listeners  ==================
-refs.startButton.addEventListener('click', onStartButton);
-refs.stopButton.addEventListener('click', onStopButton);
+refs.bodyStyle.style.justifyContent = 'center';
+refs.bodyStyle.style.display = 'flex';
+refs.bodyStyle.style.marginTop = '500px';
 
-// ================= start change color  =================
+refs.allButtons.forEach(btn => {
+  btn.style.fontSize = '30px';
+  btn.style.textTransform = 'uppercase';
+  btn.style.marginLeft = '10px';
+  btn.style.padding = '20px 40px';
+  btn.style.borderRadius = '5px';
+  btn.style.cursor = 'pointer';
+});
 
 function onStartButton() {
   refs.stopButton.disabled = false;
@@ -47,8 +35,6 @@ function onStartButton() {
     console.log(timerId);
   }, 1000);
 }
-
-// ================== stop change color   ==================
 
 function onStopButton() {
   refs.startButton.disabled = false;

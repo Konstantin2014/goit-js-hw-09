@@ -1,50 +1,40 @@
-// ================== imports  ==================
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-// ================== take refs  ==================
+
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const refs = {
   dateInput: document.querySelector('#datetime-picker'),
   startButton: document.querySelector('[data-start]'),
+  daysValue: document.querySelector('[data-days]'),
   timer: document.querySelector('.timer'),
   dateFields: document.querySelectorAll('.field'),
-  daysValue: document.querySelector('[data-days]'),
+  timerLable: document.querySelectorAll('.label'),
   hoursValue: document.querySelector('[data-hours]'),
   minutessValue: document.querySelector('[data-minutes]'),
   secondsValue: document.querySelector('[data-seconds]'),
-  timerLable: document.querySelectorAll('.label'),
 };
 
-// ================== basic style  ==================
-// refs.dateInput.type = 'date';
-//  refs.dateInput.disabled = false;
-refs.startButton.disabled = true;
+refs.dateInput.style.padding = '10px';
+refs.dateInput.style.fontSize = '30px';
 
-refs.startButton.style.paddingTop = '7px';
-refs.startButton.style.paddingBottom = '6px';
-refs.startButton.style.fontSize = '24px';
+refs.startButton.disabled = true;
+refs.startButton.style.padding = '10px';
+refs.startButton.style.fontSize = '30px';
 refs.startButton.style.textAlign = 'center';
 
-refs.dateInput.style.padding = '6px';
-refs.dateInput.style.fontSize = '25px';
-refs.dateInput.style.textAlign = 'center';
 refs.timer.style.display = 'flex';
-
-refs.dateFields.forEach(field => {
-  field.style.marginRight = '20px';
-  field.style.marginTop = '20px';
-  field.style.fontSize = '25px';
-  field.style.textAlign = 'center';
-  field.style.fontWeight = '500';
-});
-
 refs.timerLable.forEach(lable => {
   lable.style.display = 'block';
 });
 
-// ================== flatpickr init ==================
+refs.dateFields.forEach(field => {
+  field.style.margin = '10px';
+  field.style.textTransform = 'uppercase';
+  field.style.fontSize = '30px';
+  field.style.textAlign = 'center';
+  field.style.fontWeight = '400';
+});
 
 let currentTime = null;
 let selectedUnixTime = null;
@@ -58,11 +48,7 @@ const flatpickrOptions = {
     console.log(selectedDates[0]);
     currentTime = Date.now();
     selectedUnixTime = selectedDates[0].getTime();
-
-    console.log(currentTime);
-    console.log(selectedUnixTime);
     if (currentTime > selectedUnixTime) {
-      // window.alert('Please choose a date in the future')
       Notify.failure('Please choose a date in the future');
       return;
     } else {
@@ -76,7 +62,6 @@ const flatpickrOptions = {
 
 flatpickr(refs.dateInput, flatpickrOptions);
 
-// ================== make timer ==================
 let timerId = null;
 
 function onStartButton() {
@@ -94,12 +79,10 @@ function onStartButton() {
       refs.hoursValue.textContent = `${addLeadingZero(hours)}`;
       refs.minutessValue.textContent = `${addLeadingZero(minutes)}`;
       refs.secondsValue.textContent = `${addLeadingZero(seconds)}`;
-      // console.log(convertMs(deltaTime));
     }
   }, 1000);
 }
 
-// ================== convert time ==================
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -118,8 +101,6 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-
-// ================== make string with "0" on start ==================
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
